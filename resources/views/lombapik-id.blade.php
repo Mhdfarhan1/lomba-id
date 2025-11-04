@@ -305,6 +305,10 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
+
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -360,11 +364,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex items-center space-x-2">
-                    <img src="{{ asset('assets/img/sma.png') }}" class="h-12 md:h-14 w-auto" alt="SMA Logo">
-                    <img src="{{ asset('assets/img/logo_1.png') }}" class="h-8 md:h-10 w-auto" alt="PIK-R Logo">
-                    <img src="{{ asset('assets/img/logo_utama.png') }}" class="h-12 md:h-14 w-auto" alt="Logo Utama">
+                <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 max-w-full">
+                    <img src="{{ asset('assets/img/sma.png') }}"
+                        class="h-10 md:h-12 w-auto max-w-[60px] md:max-w-[80px]" alt="SMA Logo">
+
+                    <img src="{{ asset('assets/img/logo_1.png') }}"
+                        class="h-8 md:h-10 w-auto max-w-[55px] md:max-w-[70px]" alt="PIK-R Logo">
+
+                    <img src="{{ asset('assets/img/logo_utama.png') }}"
+                        class="h-10 md:h-12 w-auto max-w-[60px] md:max-w-[80px]" alt="Logo Utama">
                 </div>
+
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
@@ -420,8 +430,9 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div x-ref="menu" x-bind:style="open ? 'height: ' + $refs.menu.scrollHeight + 'px' : 'height: 0'"
+        <div x-ref="menu" x-cloak x-bind:style="open ? 'height: ' + $refs.menu.scrollHeight + 'px' : 'height: 0'"
             class="md:hidden overflow-hidden transition-all duration-500 ease-in-out bg-white border-t border-gray-100">
+
             <div class="px-4 py-4 space-y-3">
                 <!-- Beranda -->
                 <a href="#beranda"
@@ -725,7 +736,7 @@
 
 
     <!-- Tahapan Section -->
-    <section id="tahapan" class="py-20 px-4 bg-slate-50">
+    <section id="tahapan" class="py-20 px-4 bg-slate-50 overflow-hidden">
         <div class="max-w-5xl mx-auto">
             <!-- Judul -->
             <div class="text-center mb-10" data-aos="fade-up">
@@ -761,99 +772,99 @@
                 </div>
 
                 @foreach($tahapan as $index => $item)
-                    @php
-                        $isEven = $index % 2 == 0;
-                        $ikon = $icons[$item->urutan] ?? 'fa-circle-check';
+                        @php
+                            $isEven = $index % 2 == 0;
+                            $ikon = $icons[$item->urutan] ?? 'fa-circle-check';
 
-                        $mulai = Carbon::parse($item->tanggal_mulai)->startOfDay();
-                        $selesai = $item->tanggal_selesai
-                            ? Carbon::parse($item->tanggal_selesai)->endOfDay()
-                            : $mulai->endOfDay();
+                            $mulai = Carbon::parse($item->tanggal_mulai)->startOfDay();
+                            $selesai = $item->tanggal_selesai
+                                ? Carbon::parse($item->tanggal_selesai)->endOfDay()
+                                : $mulai->endOfDay();
 
-                        if ($today->between($mulai, $selesai)) {
-                            $status = 'berlangsung';
-                        } elseif ($today->lt($mulai)) {
-                            $status = 'akan';
-                        } else {
-                            $status = 'selesai';
-                        }
+                            if ($today->between($mulai, $selesai)) {
+                                $status = 'berlangsung';
+                            } elseif ($today->lt($mulai)) {
+                                $status = 'akan';
+                            } else {
+                                $status = 'selesai';
+                            }
 
-                        $warnaIcon = match ($status) {
-                            'berlangsung' => 'bg-blue-500 ring-blue-200',
-                            'akan' => 'bg-slate-300 ring-slate-100',
-                            'selesai' => 'bg-green-500 ring-green-200',
-                        };
+                            $warnaIcon = match ($status) {
+                                'berlangsung' => 'bg-blue-500 ring-blue-200',
+                                'akan' => 'bg-slate-300 ring-slate-100',
+                                'selesai' => 'bg-green-500 ring-green-200',
+                            };
 
-                        $warnaBadge = match ($status) {
-                            'berlangsung' => 'bg-blue-100 text-blue-700',
-                            'akan' => 'bg-slate-100 text-slate-600',
-                            'selesai' => 'bg-green-100 text-green-700',
-                        };
-                    @endphp
+                            $warnaBadge = match ($status) {
+                                'berlangsung' => 'bg-blue-100 text-blue-700',
+                                'akan' => 'bg-slate-100 text-slate-600',
+                                'selesai' => 'bg-green-100 text-green-700',
+                            };
+                        @endphp
 
-                    <!-- Hitung tinggi progres sampai ikon ini -->
-                    <div class="relative mb-12 flex flex-col {{ $isEven ? 'md:flex-row' : 'md:flex-row-reverse' }} justify-between items-center w-full"
-                        data-tahap="{{ $status }}">
-                        <div class="hidden md:block md:w-5/12"></div>
+                        <!-- Hitung tinggi progres sampai ikon ini -->
+                        <div class="relative mb-12 flex flex-col {{ $isEven ? 'md:flex-row' : 'md:flex-row-reverse' }} justify-between items-center w-full"
+                            data-tahap="{{ $status }}">
+                            <div class="hidden md:block md:w-5/12"></div>
 
-                        <!-- Ikon Tengah -->
-                        <div class="z-20 flex items-center {{ $warnaIcon }} shadow-xl w-12 h-12 rounded-full justify-center ring-8 mx-auto md:mx-0 transition-all duration-500 relative"
-                            data-aos="zoom-in">
-                            <i class="fas {{ $ikon }} text-white text-lg"></i>
-                        </div>
+                            <!-- Ikon Tengah -->
+                            <div class="z-20 flex items-center {{ $warnaIcon }} shadow-xl w-12 h-12 rounded-full justify-center ring-8 mx-auto md:mx-0 transition-all duration-500 relative"
+                                data-aos="zoom-in">
+                                <i class="fas {{ $ikon }} text-white text-lg"></i>
+                            </div>
 
-                        <!-- Card -->
-                        <div class="relative bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
-                                                                            transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
-                            data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
+                            <!-- Card -->
+                            <div class="relative overflow-hidden bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
+                    transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
+                                data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
 
-                            <!-- Badge tanggal -->
-                            <div class="inline-block {{ $warnaBadge }} text-sm font-semibold px-3 py-1 rounded-full mb-3">
-                                {{ $mulai->translatedFormat('d F Y') }}
-                                @if($item->tanggal_selesai)
-                                    - {{ $selesai->translatedFormat('d F Y') }}
+                                <!-- Badge tanggal -->
+                                <div class="inline-block {{ $warnaBadge }} text-sm font-semibold px-3 py-1 rounded-full mb-3">
+                                    {{ $mulai->translatedFormat('d F Y') }}
+                                    @if($item->tanggal_selesai)
+                                        - {{ $selesai->translatedFormat('d F Y') }}
+                                    @endif
+                                </div>
+
+                                <!-- Judul Tahap -->
+                                <h3 class="font-bold text-lg text-gray-800 mb-1">
+                                    {{ $item->judul_tahap }}
+                                </h3>
+
+                                <!-- Deskripsi Tahap -->
+                                <p class="text-slate-700 text-sm leading-relaxed">
+                                    {{ $item->deskripsi }}
+                                </p>
+
+                                <!-- Status -->
+                                @if($status === 'berlangsung')
+                                    <span class="mt-3 inline-block text-blue-600 text-xs font-semibold animate-pulse">
+                                        <i class="fas fa-spinner fa-spin mr-1"></i> Sedang Berlangsung
+                                    </span>
+                                @elseif($status === 'akan')
+                                    <span class="mt-3 inline-block text-slate-500 text-xs font-semibold">
+                                        <i class="fas fa-clock mr-1"></i> Akan Datang
+                                    </span>
+                                @else
+                                    <span class="mt-3 inline-block text-green-600 text-xs font-semibold">
+                                        <i class="fas fa-check-circle mr-1"></i> Selesai
+                                    </span>
                                 @endif
-                            </div>
 
-                            <!-- Judul Tahap -->
-                            <h3 class="font-bold text-lg text-gray-800 mb-1">
-                                {{ $item->judul_tahap }}
-                            </h3>
+                                <!-- Gelembung dekoratif bawah -->
+                                <div
+                                    class="absolute -bottom-6 -left-6 w-14 h-14 bg-blue-200 rounded-full opacity-20 pointer-events-none animate-bounce-slow">
+                                </div>
+                                <div
+                                    class="absolute -bottom-4 right-8 w-16 h-16 bg-indigo-200 rounded-full opacity-10 pointer-events-none animate-pulse">
+                                </div>
+                                <div
+                                    class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-sky-300 rounded-full opacity-15 pointer-events-none">
+                                </div>
 
-                            <!-- Deskripsi Tahap -->
-                            <p class="text-slate-700 text-sm leading-relaxed">
-                                {{ $item->deskripsi }}
-                            </p>
-
-                            <!-- Status -->
-                            @if($status === 'berlangsung')
-                                <span class="mt-3 inline-block text-blue-600 text-xs font-semibold animate-pulse">
-                                    <i class="fas fa-spinner fa-spin mr-1"></i> Sedang Berlangsung
-                                </span>
-                            @elseif($status === 'akan')
-                                <span class="mt-3 inline-block text-slate-500 text-xs font-semibold">
-                                    <i class="fas fa-clock mr-1"></i> Akan Datang
-                                </span>
-                            @else
-                                <span class="mt-3 inline-block text-green-600 text-xs font-semibold">
-                                    <i class="fas fa-check-circle mr-1"></i> Selesai
-                                </span>
-                            @endif
-
-                            <!-- Gelembung dekoratif bawah -->
-                            <div
-                                class="absolute -bottom-6 -left-6 w-14 h-14 bg-blue-200 rounded-full opacity-20 pointer-events-none animate-bounce-slow">
-                            </div>
-                            <div
-                                class="absolute -bottom-4 right-8 w-16 h-16 bg-indigo-200 rounded-full opacity-10 pointer-events-none animate-pulse">
-                            </div>
-                            <div
-                                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-sky-300 rounded-full opacity-15 pointer-events-none">
                             </div>
 
                         </div>
-
-                    </div>
                 @endforeach
             </div>
 
@@ -970,74 +981,74 @@
 
 
     <section id="kontak" class="py-20 px-6 bg-slate-50 flex justify-center" data-aos="fade-up">
-    <div class="w-full max-w-6xl flex flex-col items-center">
-
-        <!-- Judul -->
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
-                Kontak Panitia
-            </h2>
-            <div class="w-24 h-1.5 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-5 rounded-full"></div>
-            <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Butuh bantuan atau ada pertanyaan seputar LOMBAPIKR.id? Jangan ragu untuk menghubungi kami di
-                <span class="font-semibold text-blue-600">LOMBAPIKR.id!</span>
-            </p>
-        </div>
-
-        <!-- Konten utama -->
-        <div
-            class="w-full bg-gradient-to-b from-blue-700 to-blue-800 rounded-2xl shadow-xl p-10 md:p-14 text-center text-white space-y-8">
-
-            <!-- Label Section -->
-            <span
-                class="bg-blue-600/70 text-blue-100 text-xs font-semibold px-5 py-1.5 rounded-full uppercase tracking-wider">
-                Hubungi Kami
-            </span>
+        <div class="w-full max-w-6xl flex flex-col items-center">
 
             <!-- Judul -->
-            <h2 class="text-2xl md:text-4xl font-bold leading-snug">
-                Kami Siap Membantu Kamu!
-            </h2>
-
-            <!-- Titik Dekoratif -->
-            <div class="flex justify-center mt-2 space-x-1">
-                <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
-                <div class="w-2 h-2 bg-orange-300 rounded-full"></div>
-                <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+                    Kontak Panitia
+                </h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-5 rounded-full"></div>
+                <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                    Butuh bantuan atau ada pertanyaan seputar LOMBAPIKR.id? Jangan ragu untuk menghubungi kami di
+                    <span class="font-semibold text-blue-600">LOMBAPIKR.id!</span>
+                </p>
             </div>
 
-            <!-- Kontak Langsung -->
-            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+            <!-- Konten utama -->
+            <div
+                class="w-full bg-gradient-to-b from-blue-700 to-blue-800 rounded-2xl shadow-xl p-10 md:p-14 text-center text-white space-y-8">
 
-                <!-- Email -->
-                <a href="mailto:pikrsman1tasikputri@gmail.com"
-                    class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-blue-800">
-                    <div
-                        class="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-300">
-                        <i class="fas fa-envelope text-2xl group-hover:text-blue-700"></i>
-                    </div>
-                    <h3 class="text-base font-semibold group-hover:text-blue-700">Email</h3>
-                </a>
+                <!-- Label Section -->
+                <span
+                    class="bg-blue-600/70 text-blue-100 text-xs font-semibold px-5 py-1.5 rounded-full uppercase tracking-wider">
+                    Hubungi Kami
+                </span>
 
-                <!-- WhatsApp -->
-                <a href="https://wa.me/628229245081" target="_blank"
-                    class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-green-700">
-                    <div
-                        class="w-14 h-14 flex items-center justify-center rounded-full bg-green-100 group-hover:bg-green-200 transition-colors duration-300">
-                        <i class="fab fa-whatsapp text-2xl group-hover:text-green-700"></i>
-                    </div>
-                    <h3 class="text-base font-semibold group-hover:text-green-700">WhatsApp</h3>
-                </a>
+                <!-- Judul -->
+                <h2 class="text-2xl md:text-4xl font-bold leading-snug">
+                    Kami Siap Membantu Kamu!
+                </h2>
 
+                <!-- Titik Dekoratif -->
+                <div class="flex justify-center mt-2 space-x-1">
+                    <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                    <div class="w-2 h-2 bg-orange-300 rounded-full"></div>
+                    <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                </div>
+
+                <!-- Kontak Langsung -->
+                <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+
+                    <!-- Email -->
+                    <a href="mailto:pikrsman1tasikputri@gmail.com"
+                        class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-blue-800">
+                        <div
+                            class="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-300">
+                            <i class="fas fa-envelope text-2xl group-hover:text-blue-700"></i>
+                        </div>
+                        <h3 class="text-base font-semibold group-hover:text-blue-700">Email</h3>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/628229245081" target="_blank"
+                        class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-green-700">
+                        <div
+                            class="w-14 h-14 flex items-center justify-center rounded-full bg-green-100 group-hover:bg-green-200 transition-colors duration-300">
+                            <i class="fab fa-whatsapp text-2xl group-hover:text-green-700"></i>
+                        </div>
+                        <h3 class="text-base font-semibold group-hover:text-green-700">WhatsApp</h3>
+                    </a>
+
+                </div>
+
+                <!-- Nama Sekolah -->
+                <p class="text-sm mt-8 text-blue-100 font-medium tracking-wide">
+                    SMA NEGERI 1 TASIK PUTRI PUYU
+                </p>
             </div>
-
-            <!-- Nama Sekolah -->
-            <p class="text-sm mt-8 text-blue-100 font-medium tracking-wide">
-                SMA NEGERI 1 TASIK PUTRI PUYU
-            </p>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
