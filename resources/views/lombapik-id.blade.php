@@ -308,7 +308,36 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="{ loading: true }" x-init="setTimeout(() => loading = false, 1800)">
+
+    <!-- Preloader -->
+    <div x-data="{ loading: true }" x-init="window.addEventListener('load', () => { 
+         setTimeout(() => loading = false, 1000) 
+     })">
+        <div x-show="loading" x-transition.opacity.duration.700ms
+            class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 via-white to-blue-50">
+
+            <!-- Spiral Loader -->
+            <div class="relative flex items-center justify-center">
+                <div class="absolute w-20 h-20 rounded-full border-4 border-t-transparent border-blue-600 animate-spin">
+                </div>
+                <div
+                    class="absolute w-16 h-16 rounded-full border-4 border-t-transparent border-blue-400 animate-[spin_2s_linear_infinite_reverse]">
+                </div>
+                <div
+                    class="absolute w-12 h-12 rounded-full border-4 border-t-transparent border-blue-300 animate-[spin_3s_linear_infinite]">
+                </div>
+            </div>
+
+            <!-- Loading Text -->
+            <p class="mt-10 text-blue-700 font-semibold text-lg tracking-wide animate-pulse">
+                Memuat LombaPIKR.id...
+            </p>
+        </div>
+    </div>
+
+
+
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 navbar-glass shadow-lg" x-data="{
         open: false,
@@ -378,7 +407,7 @@
                     </a>
                     <!-- Login -->
                     <a href="{{ route('admin.login') }}"
-                        class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 text-base">
+                        class="flex items-center gap-4 bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 text-base">
                         <i class="fas fa-arrow-right-to-bracket text-base"></i> MASUK
                     </a>
                 </div>
@@ -426,7 +455,7 @@
 
                 <!-- Login -->
                 <a href="{{ route('admin.login') }}" @click="open = false"
-                    class="flex items-center gap-2 justify-center text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:scale-105 transition-transform duration-200">
+                    class="flex items-center gap-2 justify-center text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-5 rounded-lg font-semibold shadow-lg hover:scale-105 transition-transform duration-200">
                     <i class="fas fa-arrow-right-to-bracket"></i> MASUK
                 </a>
             </div>
@@ -549,8 +578,8 @@
                 </a>
 
                 <!-- Item 2: Panduan Persyaratan -->
-                <a href="https://drive.google.com/drive/folders/1EbrskkytYwxKnsuqWcO3tc8oPI6FTyQk?usp=sharing" target="_blank"
-                    data-aos="fade-up" data-aos-delay="200"
+                <a href="https://drive.google.com/drive/folders/1EbrskkytYwxKnsuqWcO3tc8oPI6FTyQk?usp=sharing"
+                    target="_blank" data-aos="fade-up" data-aos-delay="200"
                     class="group relative block bg-white rounded-2xl shadow-xl border border-gray-200 p-8 text-center transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 overflow-hidden">
                     <!-- Gelembung dekoratif -->
                     <div class="absolute -top-4 -right-4 w-24 h-24 bg-pink-100 rounded-full opacity-30 animate-pulse">
@@ -775,7 +804,7 @@
 
                         <!-- Card -->
                         <div class="relative bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
-                                            transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
+                                                                            transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
                             data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
 
                             <!-- Badge tanggal -->
@@ -940,65 +969,76 @@
     </section>
 
 
-    <section id="kontak" class="py-16 px-4 flex justify-center bg-slate-50" data-aos="fade-up">
+    <section id="kontak" class="py-20 px-6 bg-slate-50 flex justify-center" data-aos="fade-up">
+    <div class="w-full max-w-6xl flex flex-col items-center">
+
+        <!-- Judul -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+                Kontak Panitia
+            </h2>
+            <div class="w-24 h-1.5 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-5 rounded-full"></div>
+            <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                Butuh bantuan atau ada pertanyaan seputar LOMBAPIKR.id? Jangan ragu untuk menghubungi kami di
+                <span class="font-semibold text-blue-600">LOMBAPIKR.id!</span>
+            </p>
+        </div>
+
+        <!-- Konten utama -->
         <div
-            class="max-w-5xl w-full bg-gradient-to-b from-blue-700 to-blue-800 rounded-2xl shadow-xl p-10 text-center text-white">
+            class="w-full bg-gradient-to-b from-blue-700 to-blue-800 rounded-2xl shadow-xl p-10 md:p-14 text-center text-white space-y-8">
 
             <!-- Label Section -->
             <span
-                class="bg-blue-600/70 text-blue-100 text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-wider">
-                Kontak / Dukungan Panitia
+                class="bg-blue-600/70 text-blue-100 text-xs font-semibold px-5 py-1.5 rounded-full uppercase tracking-wider">
+                Hubungi Kami
             </span>
 
             <!-- Judul -->
-            <h2 class="text-3xl md:text-4xl font-bold mt-6 leading-snug">
-                Ada Kendala? Hubungi Panitia
+            <h2 class="text-2xl md:text-4xl font-bold leading-snug">
+                Kami Siap Membantu Kamu!
             </h2>
 
             <!-- Titik Dekoratif -->
-            <div class="flex justify-center mt-6 space-x-1">
+            <div class="flex justify-center mt-2 space-x-1">
                 <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
                 <div class="w-2 h-2 bg-orange-300 rounded-full"></div>
                 <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
             </div>
 
             <!-- Kontak Langsung -->
-            <div class="mt-6 grid md:grid-cols-2 gap-4 text-center">
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
 
                 <!-- Email -->
                 <a href="mailto:pikrsman1tasikputri@gmail.com"
-                    class="group flex flex-col items-center gap-2 bg-white rounded-lg shadow-sm p-4 transition-transform duration-200 hover:scale-105 hover:shadow-md text-blue-800">
-
+                    class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-blue-800">
                     <div
-                        class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-200">
-                        <i class="fas fa-envelope text-xl group-hover:text-blue-700 transition-colors duration-200"></i>
+                        class="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100 group-hover:bg-blue-200 transition-colors duration-300">
+                        <i class="fas fa-envelope text-2xl group-hover:text-blue-700"></i>
                     </div>
-
-                    <h3 class="text-sm font-semibold group-hover:text-blue-700 transition-colors duration-200">Email
-                    </h3>
+                    <h3 class="text-base font-semibold group-hover:text-blue-700">Email</h3>
                 </a>
 
                 <!-- WhatsApp -->
                 <a href="https://wa.me/628229245081" target="_blank"
-                    class="group flex flex-col items-center gap-2 bg-white rounded-lg shadow-sm p-4 transition-transform duration-200 hover:scale-105 hover:shadow-md text-green-700">
-
+                    class="group flex flex-col items-center gap-3 bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg text-green-700">
                     <div
-                        class="w-12 h-12 flex items-center justify-center rounded-full bg-green-100 group-hover:bg-green-200 transition-colors duration-200">
-                        <i
-                            class="fab fa-whatsapp text-xl group-hover:text-green-700 transition-colors duration-200"></i>
+                        class="w-14 h-14 flex items-center justify-center rounded-full bg-green-100 group-hover:bg-green-200 transition-colors duration-300">
+                        <i class="fab fa-whatsapp text-2xl group-hover:text-green-700"></i>
                     </div>
-
-                    <h3 class="text-sm font-semibold group-hover:text-green-700 transition-colors duration-200">WhatsApp
-                    </h3>
+                    <h3 class="text-base font-semibold group-hover:text-green-700">WhatsApp</h3>
                 </a>
 
             </div>
+
             <!-- Nama Sekolah -->
-            <p class="text-sm mt-6 text-blue-100 font-medium tracking-wide">
+            <p class="text-sm mt-8 text-blue-100 font-medium tracking-wide">
                 SMA NEGERI 1 TASIK PUTRI PUYU
             </p>
         </div>
-    </section>
+    </div>
+</section>
+
 
 
 
@@ -1031,9 +1071,9 @@
                     <h4 class="text-white font-bold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-blue-200 text-sm">
                         <li><i class="fas fa-map-marker-alt mr-2 text-blue-300"></i>
-                            Jl. Husni Tamri, Desa Kudap,
+                            Jl. Husni Tamrin, Desa Kudap,
                             Kec. Tasik Putri Puyu,
-                            Kab. Kepulauan Meranti, Riau 28754
+                            Kab. Kepulauan Meranti, Provinsi Riau
                         </li>
                         <li><i class="fas fa-phone mr-2 text-green-300"></i>+62 822 2924 5081</li>
                         <li><i class="fas fa-envelope mr-2 text-yellow-300"></i>pikrequestsman1tpp25@gmail.com</li>
@@ -1287,8 +1327,8 @@
             window.closeTimelineModal = () => document.getElementById('timelineModal')?.classList.add('hidden');
 
         });
-        
-         document.getElementById("year").textContent = new Date().getFullYear();
+
+        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 
 
