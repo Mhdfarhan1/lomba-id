@@ -1,0 +1,15 @@
+<?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Setting extends Model
+{
+    use HasFactory;
+
+    // Izinkan 'key' dan 'value' diisi
+    protected $fillable = ['key', 'value'];
+
+    // Kita tidak perlu 'updated_at' dan 'created_at' untuk ini
+    public $timestamps = false;
+}
