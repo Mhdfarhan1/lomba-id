@@ -648,9 +648,6 @@
     </section>
 
 
-
-
-
     <!-- Statistik Section -->
     <section id="kategori" class="py-20 px-4 bg-slate-50" data-aos="fade-up">
         <div class="max-w-7xl mx-auto">
@@ -950,21 +947,6 @@
                         </section>
                     </div> <!-- Catatan (Sticky Bottom) -->
                     <div class="sticky bottom-0 w-full bg-white z-20 border-t border-gray-200 p-6 shadow-md">
-                        <!-- Bagian 1: Catatan (Dari kode Anda) -->
-                        <h3 class="flex items-center gap-2 text-blue-600 font-semibold mb-3"> <i
-                                class="fas fa-info-circle"></i> Catatan </h3>
-                        <ul class="space-y-2 text-gray-700 text-sm">
-                            <li class="flex items-start gap-2"> <i class="fas fa-calendar-alt text-blue-500 mt-1"></i>
-                                <span>Jadwal lomba dapat berubah sewaktu-waktu sesuai kebijakan panitia PIK-R
-                                    2025.</span>
-                            </li>
-                            <li class="flex items-start gap-2"> <i class="fas fa-bullhorn text-green-500 mt-1"></i>
-                                <span>Peserta wajib memeriksa halaman resmi lomba untuk update terbaru.</span>
-                            </li>
-                            <li class="flex items-start gap-2"> <i class="fas fa-clock text-orange-500 mt-1"></i>
-                                <span>Pastikan hadir tepat waktu sesuai jadwal setiap tahap lomba.</span>
-                            </li>
-                        </ul> <!-- Garis pemisah -->
                         <hr class="my-4 border-gray-200"> <!-- Bagian 2: Box "Catatan Penting" (Tambahan) -->
                         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md">
                             <p class="text-sm text-blue-800"> <strong>Catatan Penting:</strong> Lomba akan dilaksanakan
