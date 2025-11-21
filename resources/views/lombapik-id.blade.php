@@ -812,7 +812,7 @@
 
                         <!-- Card -->
                         <div class="relative overflow-hidden bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
-                                                                            transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
+                                                                                transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
                             data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
 
                             <!-- Badge tanggal -->
@@ -1099,6 +1099,11 @@
                     <a href="https://yourportfolio.com" target="_blank"
                         class="text-white font-semibold hover:text-blue-400 transition">Muhamad Farhan</a>
                 </p>
+                <div class="mt-2">
+                    <span class="px-2 py-1 text-xs rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">
+                        v1.1
+                    </span>
+                </div>
             </div>
         </div>
     </footer>
@@ -1198,11 +1203,11 @@
                             btnUpload.onclick = null;
                             btnUpload.classList.remove('opacity-50', 'cursor-not-allowed');
                         } else {
-                            
-                            btnUpload.href = "{{ route('upload.habis') }}"; 
-                            btnUpload.onclick = null; 
+
+                            btnUpload.href = "{{ route('upload.habis') }}";
+                            btnUpload.onclick = null;
                             btnUpload.classList.remove('cursor-not-allowed');
-                            btnUpload.classList.add('opacity-50'); 
+                            btnUpload.classList.add('opacity-50');
 
 
 
