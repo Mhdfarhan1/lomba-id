@@ -10,7 +10,8 @@
 
         body {
             font-family: 'Inter', Arial, sans-serif;
-            background-color: #f8f9fa; /* Latar belakang lebih cerah */
+            background-color: #f8f9fa;
+            /* Latar belakang lebih cerah */
             margin: 0;
             padding: 0;
             -webkit-font-smoothing: antialiased;
@@ -18,7 +19,8 @@
         }
 
         .card {
-            max-width: 600px; /* Sedikit lebih ramping */
+            max-width: 600px;
+            /* Sedikit lebih ramping */
             margin: 40px auto;
             background-color: #ffffff;
             border-radius: 16px;
@@ -30,7 +32,7 @@
 
         .header {
             /* Gradien baru yang lebih kaya */
-            background: linear-gradient(135deg, #4F46E5, #8B5CF6); 
+            background: linear-gradient(135deg, #4F46E5, #8B5CF6);
             color: #ffffff;
             text-align: center;
             padding: 50px 30px;
@@ -50,7 +52,8 @@
 
         .body {
             padding: 40px 35px;
-            color: #334155; /* Warna teks slate-700 */
+            color: #334155;
+            /* Warna teks slate-700 */
         }
 
         .body h3 {
@@ -75,7 +78,7 @@
 
         .details tr {
             /* Garis bawah antar baris, lebih bersih dari zebra-striping */
-            border-bottom: 1px solid #e5e7eb; 
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .details tr:last-child {
@@ -83,15 +86,18 @@
         }
 
         .details td {
-            padding: 16px 8px; /* Padding vertikal lebih banyak */
+            padding: 16px 8px;
+            /* Padding vertikal lebih banyak */
             vertical-align: top;
             font-size: 15px;
         }
 
         .details .label {
-            color: #64748B; /* Warna slate-500 */
+            color: #64748B;
+            /* Warna slate-500 */
             font-weight: 500;
-            width: 160px; /* Lebar label konsisten */
+            width: 160px;
+            /* Lebar label konsisten */
         }
 
         .details .value {
@@ -100,7 +106,8 @@
         }
 
         .highlight {
-            color: #4F46E5; /* Sesuaikan dengan warna primer baru */
+            color: #4F46E5;
+            /* Sesuaikan dengan warna primer baru */
             font-weight: 700;
         }
 
@@ -123,14 +130,16 @@
         }
 
         .cta-button:hover {
-            background-color: #4338CA; /* Sedikit lebih gelap saat hover */
+            background-color: #4338CA;
+            /* Sedikit lebih gelap saat hover */
         }
 
         .footer {
             text-align: center;
             padding: 30px 20px;
             font-size: 13px;
-            color: #94a3b8; /* Warna slate-400 */
+            color: #94a3b8;
+            /* Warna slate-400 */
             background-color: #f8f9fa;
             border-top: 1px solid #e5e7eb;
         }
@@ -144,7 +153,7 @@
             text-decoration: none;
             margin: 0 8px;
         }
-        
+
         .footer a:hover {
             text-decoration: underline;
         }
@@ -165,11 +174,13 @@
                     {{-- Header --}}
                     <div class="header">
                         <div style="text-align: center; margin-bottom: 20px;">
-                            <svg width="72" height="72" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#ffffff">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            <svg width="72" height="72" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                fill="#ffffff">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                             </svg>
                         </div>
-                        
+
                         <h1>Pendaftaran Berhasil!</h1>
                         <p>Kami telah menerima pendaftaran Anda.</p>
                     </div>
@@ -186,7 +197,7 @@
                         <div class="separator"></div>
 
                         <h3>Detail Pendaftaran Anda</h3>
-                        
+
                         <table class="details" role="presentation">
                             <tr>
                                 <td class="label">Nama Peserta:</td>
@@ -199,6 +210,17 @@
                             <tr>
                                 <td class="label">Kelas:</td>
                                 <td class="value">{{ $pendaftaran->peserta->kelas->nama_kelas ?? '-' }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="label">Asal Sekolah:</td>
+                                <td class="value">{{ $pendaftaran->peserta->asal_sekolah ?? '-' }}</td>
+                            </tr>
+
+                            {{-- Kolom baru: Asal PIK-R --}}
+                            <tr>
+                                <td class="label">Asal PIK-R:</td>
+                                <td class="value">{{ $pendaftaran->peserta->asal_pikr ?? '-' }}</td>
                             </tr>
 
                             {{-- Logika untuk anggota kelompok --}}

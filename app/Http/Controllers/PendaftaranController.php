@@ -29,6 +29,11 @@ class PendaftaranController extends Controller
             'jenis_kelamin'    => 'required|in:Laki-laki,Perempuan',
             'id_kelas'         => 'required|integer|exists:kelas,id_kelas',
             'no_hp'            => 'required|string|max:20',
+
+            // TAMBAHAN BARU DISINI
+            'asal_sekolah'     => 'required|string|max:100', // Wajib
+            'asal_pikr'        => 'nullable|string|max:100', // Opsional
+
             'email'            => 'nullable|email|max:100',
             'id_lomba'         => 'required|integer|exists:lomba,id_lomba',
             'jenis_peserta'    => 'required|in:Individu,Kelompok',
@@ -37,8 +42,8 @@ class PendaftaranController extends Controller
 
         // Jika kelompok, pecah anggota berdasarkan koma dan trim spasi
         $anggota = $request->jenis_peserta === 'Kelompok' && $request->anggota_kelompok
-                    ? array_map('trim', explode(',', $request->anggota_kelompok))
-                    : null;
+            ? array_map('trim', explode(',', $request->anggota_kelompok))
+            : null;
 
         // Simpan peserta dulu
         $peserta = Peserta::create([
@@ -47,16 +52,21 @@ class PendaftaranController extends Controller
             'jenis_kelamin'    => $request->jenis_kelamin,
             'id_kelas'         => $request->id_kelas,
             'no_hp'            => $request->no_hp,
+
+            // MASUKKAN DATA BARU KE DATABASE
+            'asal_sekolah'     => $request->asal_sekolah,
+            'asal_pikr'        => $request->asal_pikr,
+
             'email'            => $request->email,
-            'jenis_peserta'    => $request->jenis_peserta,
-            'anggota_kelompok' => $anggota ? json_encode($anggota) : null, // simpan JSON
+            'jenis_peserta'    => $request->jenis_peserta, // Pastikan kolom ini ada di tabel peserta Anda
+            'anggota_kelompok' => $anggota ? json_encode($anggota) : null, // Pastikan kolom ini ada di tabel peserta Anda
         ]);
 
         // Simpan pendaftaran lomba (tabel pivot)
         PendaftaranLomba::create([
-            'id_peserta'       => $peserta->id_peserta,
-            'id_lomba'         => $request->id_lomba,
-            'tanggal_daftar'   => now(),
+            'id_peserta'     => $peserta->id_peserta,
+            'id_lomba'       => $request->id_lomba,
+            'tanggal_daftar' => now(),
         ]);
 
         return redirect()->route('pendaftaran.create')

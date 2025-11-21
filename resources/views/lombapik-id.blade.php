@@ -769,99 +769,99 @@
                 </div>
 
                 @foreach($tahapan as $index => $item)
-                        @php
-                            $isEven = $index % 2 == 0;
-                            $ikon = $icons[$item->urutan] ?? 'fa-circle-check';
+                    @php
+                        $isEven = $index % 2 == 0;
+                        $ikon = $icons[$item->urutan] ?? 'fa-circle-check';
 
-                            $mulai = Carbon::parse($item->tanggal_mulai)->startOfDay();
-                            $selesai = $item->tanggal_selesai
-                                ? Carbon::parse($item->tanggal_selesai)->endOfDay()
-                                : $mulai->endOfDay();
+                        $mulai = Carbon::parse($item->tanggal_mulai)->startOfDay();
+                        $selesai = $item->tanggal_selesai
+                            ? Carbon::parse($item->tanggal_selesai)->endOfDay()
+                            : $mulai->endOfDay();
 
-                            if ($today->between($mulai, $selesai)) {
-                                $status = 'berlangsung';
-                            } elseif ($today->lt($mulai)) {
-                                $status = 'akan';
-                            } else {
-                                $status = 'selesai';
-                            }
+                        if ($today->between($mulai, $selesai)) {
+                            $status = 'berlangsung';
+                        } elseif ($today->lt($mulai)) {
+                            $status = 'akan';
+                        } else {
+                            $status = 'selesai';
+                        }
 
-                            $warnaIcon = match ($status) {
-                                'berlangsung' => 'bg-blue-500 ring-blue-200',
-                                'akan' => 'bg-slate-300 ring-slate-100',
-                                'selesai' => 'bg-green-500 ring-green-200',
-                            };
+                        $warnaIcon = match ($status) {
+                            'berlangsung' => 'bg-blue-500 ring-blue-200',
+                            'akan' => 'bg-slate-300 ring-slate-100',
+                            'selesai' => 'bg-green-500 ring-green-200',
+                        };
 
-                            $warnaBadge = match ($status) {
-                                'berlangsung' => 'bg-blue-100 text-blue-700',
-                                'akan' => 'bg-slate-100 text-slate-600',
-                                'selesai' => 'bg-green-100 text-green-700',
-                            };
-                        @endphp
+                        $warnaBadge = match ($status) {
+                            'berlangsung' => 'bg-blue-100 text-blue-700',
+                            'akan' => 'bg-slate-100 text-slate-600',
+                            'selesai' => 'bg-green-100 text-green-700',
+                        };
+                    @endphp
 
-                        <!-- Hitung tinggi progres sampai ikon ini -->
-                        <div class="relative mb-12 flex flex-col {{ $isEven ? 'md:flex-row' : 'md:flex-row-reverse' }} justify-between items-center w-full"
-                            data-tahap="{{ $status }}">
-                            <div class="hidden md:block md:w-5/12"></div>
+                    <!-- Hitung tinggi progres sampai ikon ini -->
+                    <div class="relative mb-12 flex flex-col {{ $isEven ? 'md:flex-row' : 'md:flex-row-reverse' }} justify-between items-center w-full"
+                        data-tahap="{{ $status }}">
+                        <div class="hidden md:block md:w-5/12"></div>
 
-                            <!-- Ikon Tengah -->
-                            <div class="z-20 flex items-center {{ $warnaIcon }} shadow-xl w-12 h-12 rounded-full justify-center ring-8 mx-auto md:mx-0 transition-all duration-500 relative"
-                                data-aos="zoom-in">
-                                <i class="fas {{ $ikon }} text-white text-lg"></i>
+                        <!-- Ikon Tengah -->
+                        <div class="z-20 flex items-center {{ $warnaIcon }} shadow-xl w-12 h-12 rounded-full justify-center ring-8 mx-auto md:mx-0 transition-all duration-500 relative"
+                            data-aos="zoom-in">
+                            <i class="fas {{ $ikon }} text-white text-lg"></i>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="relative overflow-hidden bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
+                                                                            transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
+                            data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
+
+                            <!-- Badge tanggal -->
+                            <div class="inline-block {{ $warnaBadge }} text-sm font-semibold px-3 py-1 rounded-full mb-3">
+                                {{ $mulai->translatedFormat('d F Y') }}
+                                @if($item->tanggal_selesai)
+                                    - {{ $selesai->translatedFormat('d F Y') }}
+                                @endif
                             </div>
 
-                            <!-- Card -->
-                            <div class="relative overflow-hidden bg-white rounded-xl shadow-lg border border-slate-200 w-full md:w-5/12 p-6 mt-6 md:mt-0 
-                    transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02]"
-                                data-aos="{{ $isEven ? 'fade-left' : 'fade-right' }}">
+                            <!-- Judul Tahap -->
+                            <h3 class="font-bold text-lg text-gray-800 mb-1">
+                                {{ $item->judul_tahap }}
+                            </h3>
 
-                                <!-- Badge tanggal -->
-                                <div class="inline-block {{ $warnaBadge }} text-sm font-semibold px-3 py-1 rounded-full mb-3">
-                                    {{ $mulai->translatedFormat('d F Y') }}
-                                    @if($item->tanggal_selesai)
-                                        - {{ $selesai->translatedFormat('d F Y') }}
-                                    @endif
-                                </div>
+                            <!-- Deskripsi Tahap -->
+                            <p class="text-slate-700 text-sm leading-relaxed">
+                                {{ $item->deskripsi }}
+                            </p>
 
-                                <!-- Judul Tahap -->
-                                <h3 class="font-bold text-lg text-gray-800 mb-1">
-                                    {{ $item->judul_tahap }}
-                                </h3>
+                            <!-- Status -->
+                            @if($status === 'berlangsung')
+                                <span class="mt-3 inline-block text-blue-600 text-xs font-semibold animate-pulse">
+                                    <i class="fas fa-spinner fa-spin mr-1"></i> Sedang Berlangsung
+                                </span>
+                            @elseif($status === 'akan')
+                                <span class="mt-3 inline-block text-slate-500 text-xs font-semibold">
+                                    <i class="fas fa-clock mr-1"></i> Akan Datang
+                                </span>
+                            @else
+                                <span class="mt-3 inline-block text-green-600 text-xs font-semibold">
+                                    <i class="fas fa-check-circle mr-1"></i> Selesai
+                                </span>
+                            @endif
 
-                                <!-- Deskripsi Tahap -->
-                                <p class="text-slate-700 text-sm leading-relaxed">
-                                    {{ $item->deskripsi }}
-                                </p>
-
-                                <!-- Status -->
-                                @if($status === 'berlangsung')
-                                    <span class="mt-3 inline-block text-blue-600 text-xs font-semibold animate-pulse">
-                                        <i class="fas fa-spinner fa-spin mr-1"></i> Sedang Berlangsung
-                                    </span>
-                                @elseif($status === 'akan')
-                                    <span class="mt-3 inline-block text-slate-500 text-xs font-semibold">
-                                        <i class="fas fa-clock mr-1"></i> Akan Datang
-                                    </span>
-                                @else
-                                    <span class="mt-3 inline-block text-green-600 text-xs font-semibold">
-                                        <i class="fas fa-check-circle mr-1"></i> Selesai
-                                    </span>
-                                @endif
-
-                                <!-- Gelembung dekoratif bawah -->
-                                <div
-                                    class="absolute -bottom-6 -left-6 w-14 h-14 bg-blue-200 rounded-full opacity-20 pointer-events-none animate-bounce-slow">
-                                </div>
-                                <div
-                                    class="absolute -bottom-4 right-8 w-16 h-16 bg-indigo-200 rounded-full opacity-10 pointer-events-none animate-pulse">
-                                </div>
-                                <div
-                                    class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-sky-300 rounded-full opacity-15 pointer-events-none">
-                                </div>
-
+                            <!-- Gelembung dekoratif bawah -->
+                            <div
+                                class="absolute -bottom-6 -left-6 w-14 h-14 bg-blue-200 rounded-full opacity-20 pointer-events-none animate-bounce-slow">
+                            </div>
+                            <div
+                                class="absolute -bottom-4 right-8 w-16 h-16 bg-indigo-200 rounded-full opacity-10 pointer-events-none animate-pulse">
+                            </div>
+                            <div
+                                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-sky-300 rounded-full opacity-15 pointer-events-none">
                             </div>
 
                         </div>
+
+                    </div>
                 @endforeach
             </div>
 
@@ -1110,6 +1110,14 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+
+    @php
+        // Konversi dari DB (dikirim controller) ke timestamp JS (ms)
+        $deadlineTimestamp = $mainDeadline ? strtotime($mainDeadline) * 1000 : null;
+        $uploadMulaiTimestamp = $uploadMulai ? strtotime($uploadMulai) * 1000 : null;
+    @endphp
+
+
     <script>
         AOS.init({
             duration: 800,
@@ -1121,11 +1129,21 @@
             // Countdown
             // -------------------------------
             const deadlineTimestamp = {{ $deadlineTimestamp ?? 'null' }};
+            const uploadMulaiTimestamp = {{ $uploadMulaiTimestamp ?? 'null' }};
             const btnDaftar = document.getElementById('btn-daftar');
+
             function updateCountdown() {
                 const now = new Date().getTime();
-                const distance = deadlineTimestamp - now;
 
+                // Tentukan target countdown: jika sebelum upload mulai, countdown ke upload, else ke deadline utama
+                let targetTime = deadlineTimestamp; // default
+                if (uploadMulaiTimestamp && now < uploadMulaiTimestamp) {
+                    targetTime = uploadMulaiTimestamp;
+                }
+
+                const distance = targetTime - now;
+
+                // --- Update countdown ---
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -1136,28 +1154,79 @@
                 document.getElementById('cd-minutes').innerText = distance > 0 ? String(minutes).padStart(2, '0') : '00';
                 document.getElementById('cd-seconds').innerText = distance > 0 ? String(seconds).padStart(2, '0') : '00';
 
+                const btnContainer = btnDaftar?.parentElement;
+
+                // --- Tombol Daftar ---
                 if (btnDaftar) {
-                    // Arahkan ke pendaftaran.tutup jika waktu habis
-                    btnDaftar.href = (distance <= 0 || !deadlineTimestamp)
+                    btnDaftar.href = (now > deadlineTimestamp || !deadlineTimestamp)
                         ? "{{ route('pendaftaran.tutup') }}"
                         : "{{ route('pendaftaran.create') }}";
+                }
 
-                    // Tambahkan tombol pengumuman jika belum ada dan waktu habis
-                    const btnContainer = btnDaftar.parentElement; // asumsi tombol daftar ada di dalam div wrapper
-                    if (distance <= 0 && btnContainer && !document.getElementById('btn-pengumuman')) {
-                        const btnPengumuman = document.createElement('a');
-                        btnPengumuman.id = 'btn-pengumuman';
-                        btnPengumuman.href = 'https://drive.google.com/drive/folder/xxx'; // ganti dengan link Drive
-                        btnPengumuman.target = '_blank';
-                        btnPengumuman.className = 'inline-block bg-green-500 text-white font-semibold text-base md:text-lg px-6 py-4 rounded-full shadow-2xl ml-4 hover:shadow-3xl transform hover:scale-105 transition duration-300 animate-glow';
-                        btnPengumuman.innerText = 'Pengumuman';
-                        btnContainer.appendChild(btnPengumuman);
+                // --- Tombol Upload Karya ---
+                let btnUpload = document.getElementById('btn-upload');
+                if (!btnUpload && btnContainer) {
+                    btnUpload = document.createElement('a');
+                    btnUpload.id = 'btn-upload';
+                    btnUpload.target = '_blank';
+                    btnUpload.className = 'inline-block bg-yellow-500 text-white font-semibold px-6 py-4 rounded-full shadow-2xl ml-4';
+                    btnUpload.innerText = 'Upload Karya';
+                    btnContainer.appendChild(btnUpload);
+                }
+
+                if (btnUpload) {
+                    const nowDate = new Date();
+
+                    // Default: tombol disable → belum disetting
+                    btnUpload.href = "{{ route('upload.belum_dibuka') }}";
+                    btnUpload.onclick = e => {
+                        e.preventDefault(); // hapus jika ingin langsung redirect tanpa alert
+                        // Redirect ke route khusus
+                        window.location.href = "{{ route('upload.belum_dibuka') }}";
+                    };
+                    btnUpload.classList.add('opacity-50', 'cursor-not-allowed');
+
+
+                    if (uploadMulaiTimestamp) {
+                        const uploadDate = new Date(uploadMulaiTimestamp);
+                        nowDate.setHours(0, 0, 0, 0);
+                        uploadDate.setHours(0, 0, 0, 0);
+
+                        if (nowDate.getTime() <= uploadDate.getTime()) {
+                            // Tombol aktif → sebelum atau sama dengan tanggal upload
+                            btnUpload.href = "{{ route('upload.create') }}"; // ganti ID_UPLOAD dengan route Laravel
+                            btnUpload.onclick = null;
+                            btnUpload.classList.remove('opacity-50', 'cursor-not-allowed');
+                        } else {
+                            
+                            btnUpload.href = "{{ route('upload.habis') }}"; 
+                            btnUpload.onclick = null; 
+                            btnUpload.classList.remove('cursor-not-allowed');
+                            btnUpload.classList.add('opacity-50'); 
+
+
+
+                            // Tombol Pengumuman muncul setelah upload ditutup
+                            if (btnContainer && !document.getElementById('btn-pengumuman')) {
+                                const btnPengumuman = document.createElement('a');
+                                btnPengumuman.id = 'btn-pengumuman';
+                                btnPengumuman.href = 'https://drive.google.com/drive/folders/1JdXfQWDqedIjDXPn9f2Amc-Hl-JpC_Hw?usp=sharing';
+                                btnPengumuman.target = '_blank';
+                                btnPengumuman.className = 'inline-block bg-green-500 text-white font-semibold px-6 py-4 rounded-full shadow-2xl ml-4 hover:shadow-3xl transform hover:scale-105 transition duration-300 animate-glow';
+                                btnPengumuman.innerText = 'Pengumuman';
+                                btnContainer.appendChild(btnPengumuman);
+                            }
+                        }
                     }
                 }
+
+
             }
 
             updateCountdown();
             setInterval(updateCountdown, 1000);
+
+
 
 
             // -------------------------------

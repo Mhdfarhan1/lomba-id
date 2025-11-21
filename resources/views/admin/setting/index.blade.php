@@ -35,28 +35,45 @@
             @method('PUT')
 
             <div class="space-y-4">
+                <!-- Deadline Utama -->
                 <div>
                     <label for="main_deadline" class="block text-sm font-medium text-gray-700 mb-2">
                         Tanggal & Waktu Deadline <span class="text-red-500">*</span>
                     </label>
 
                     @php
-                        // Pastikan format datetime-local selalu YYYY-MM-DDTHH:MM
                         $deadlineValue = old('main_deadline', $mainDeadline ? \Carbon\Carbon::parse($mainDeadline)->format('Y-m-d\TH:i') : '');
                     @endphp
 
                     <input type="datetime-local" id="main_deadline" name="main_deadline" value="{{ $deadlineValue }}" class="w-full md:w-1/2 rounded-lg border border-gray-300 bg-white px-3 py-2 shadow-sm
-                                  focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
-                        required>
+                          focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition" required>
                     <p class="mt-2 text-xs text-gray-500">
                         Ini adalah tanggal yang akan jadi target hitung mundur di landing page.
                     </p>
                 </div>
+
+                <!-- Upload Karya -->
+                <div>
+                    <label for="upload_mulai" class="block text-sm font-medium text-gray-700 mb-2">
+                        Tanggal & Waktu Mulai Upload Karya
+                    </label>
+
+                    @php
+                        $uploadValue = old('upload_mulai', $uploadMulai ? \Carbon\Carbon::parse($uploadMulai)->format('Y-m-d\TH:i') : '');
+                    @endphp
+
+                    <input type="datetime-local" id="upload_mulai" name="upload_mulai" value="{{ $uploadValue }}" class="w-full md:w-1/2 rounded-lg border border-gray-300 bg-white px-3 py-2 shadow-sm
+                          focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition">
+                    <p class="mt-2 text-xs text-gray-500">
+                        Ini adalah tanggal mulai peserta bisa upload karya. Jika kosong, tombol upload akan tetap nonaktif.
+                    </p>
+                </div>
             </div>
+
 
             <div class="flex justify-start pt-8 mt-8 border-t border-gray-200">
                 <button type="submit" class="flex items-center bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold
-                                               hover:bg-blue-700 shadow-md hover:shadow-lg transition">
+                                                   hover:bg-blue-700 shadow-md hover:shadow-lg transition">
                     <i class="fas fa-save mr-2"></i>
                     Simpan Pengaturan
                 </button>

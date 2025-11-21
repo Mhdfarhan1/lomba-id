@@ -155,6 +155,34 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Tambahkan di bagian "Info Akademik & Kontak" -->
+                        <div class="grid md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <label for="asal_sekolah" class="block text-sm font-medium text-gray-800 mb-1.5">Asal
+                                    Sekolah</label>
+                                <div class="relative group">
+                                    <i
+                                        class="fas fa-school absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-blue-600"></i>
+                                    <input type="text" id="asal_sekolah" name="asal_sekolah"
+                                        placeholder="Masukkan asal sekolah" value="{{ old('asal_sekolah') }}" required
+                                        class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-800 placeholder-gray-500 transition-all shadow-sm focus:shadow-md">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="asal_pikr" class="block text-sm font-medium text-gray-800 mb-1.5">Asal
+                                    PIK-R</label>
+                                <div class="relative group">
+                                    <i
+                                        class="fas fa-flag absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-blue-600"></i>
+                                    <input type="text" id="asal_pikr" name="asal_pikr" placeholder="Masukkan asal PIK-R"
+                                        value="{{ old('asal_pikr') }}"
+                                        class="w-full pl-10 pr-3 py-3 rounded-lg border border-gray-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-gray-800 placeholder-gray-500 transition-all shadow-sm focus:shadow-md">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
 
@@ -235,11 +263,11 @@
                     confirmButtonColor: '#3B82F6',
                     /* PERUBAHAN 5: SweetAlert dengan Efek Blur */
                     backdrop: `
-                                rgba(0,0,123,0.4)
-                                blur(10px)
-                                left top
-                                no-repeat
-                            `
+                                    rgba(0,0,123,0.4)
+                                    blur(10px)
+                                    left top
+                                    no-repeat
+                                `
                 });
             });
         </script>

@@ -32,6 +32,20 @@ Route::get('/pendaftaran-tutup', function () {
     return view('pendaftaran-tutup');
 })->name('pendaftaran.tutup');
 
+// Route jika upload belum dibuka
+Route::get('/upload/belum-dibuka', [LandingPageController::class, 'uploadBelumDibuka'])
+    ->name('upload.belum_dibuka');
+
+// Halaman upload karya
+Route::get('/upload', function () {
+    return view('upload'); // nanti kita buat resources/views/upload.blade.php
+})->name('upload.create');
+
+
+// Route jika upload sudah habis (opsional, kalau mau halaman khusus)
+Route::get('/upload/habis', [LandingPageController::class, 'uploadHabis'])
+    ->name('upload.habis');
+
 // Form pendaftaran
 Route::get('/pendaftaran', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
 Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');

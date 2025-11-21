@@ -55,6 +55,12 @@
                             Kelamin</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kelas
                         </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Asal
+                            Sekolah</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Asal
+                            PIK-R</th>
+
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">No HP
@@ -90,6 +96,9 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $p->peserta->kelas->nama_kelas ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ $p->peserta->asal_sekolah ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ $p->peserta->asal_pikr ?? '-' }}</td>
+
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $p->peserta->email ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $p->peserta->no_hp ?? '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-600">{{ $p->lomba->nama_lomba ?? '-' }}</td>

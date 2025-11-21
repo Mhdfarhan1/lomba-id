@@ -20,12 +20,14 @@ class PendaftaranLomba extends Model
         'status',
         'jenis_peserta',
         'anggota_kelompok',
+        'asal_sekolah',  // baru
+        'asal_pikr',     // baru
     ];
 
     // CAST anggota_kelompok ke array agar bisa diakses langsung
     protected $casts = [
         'anggota_kelompok' => 'array',
-        'tanggal_daftar' => 'datetime', // otomatis jadi Carbon instance
+        'tanggal_daftar'   => 'datetime', // otomatis jadi Carbon instance
     ];
 
     // Relasi ke peserta
@@ -46,8 +48,8 @@ class PendaftaranLomba extends Model
         return match ($this->status) {
             'menunggu' => '<span class="text-yellow-600 font-semibold">Menunggu</span>',
             'diterima' => '<span class="text-green-600 font-semibold">Diterima</span>',
-            'ditolak' => '<span class="text-red-600 font-semibold">Ditolak</span>',
-            default => '<span class="text-gray-500 font-semibold">-</span>',
+            'ditolak'  => '<span class="text-red-600 font-semibold">Ditolak</span>',
+            default    => '<span class="text-gray-500 font-semibold">-</span>',
         };
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\Lomba;
 use App\Models\TimelineLomba;
-use App\Models\Tahapan; // ✅ tambahkan model Tahapan
+use App\Models\Tahapan;
 use Carbon\Carbon;
 
 class LandingPageController extends Controller
@@ -18,13 +18,19 @@ class LandingPageController extends Controller
             ->orderBy('tanggal_mulai', 'asc')
             ->get();
 
-        // Ambil deadline dari database
+        // Ambil deadline utama dari setting
         $mainDeadline = Setting::where('key', 'main_deadline')->first()?->value;
 
-        // Konversi ke timestamp milidetik untuk JS
-        $deadlineTimestamp = $mainDeadline
-            ? Carbon::parse($mainDeadline)->timezone('Asia/Jakarta')->timestamp * 1000
-            : null;
+        // Ambil waktu mulai upload karya dari setting
+        $uploadMulai = Setting::where('key', 'upload_mulai')->first()?->value;
+
+        // Ambil waktu selesai upload karya dari setting (opsional)
+        $uploadSelesai = Setting::where('key', 'upload_selesai')->first()?->value;
+
+        // Konversi ke timestamp JS (ms)
+        $deadlineTimestamp = $mainDeadline ? Carbon::parse($mainDeadline)->timezone('Asia/Jakarta')->timestamp * 1000 : null;
+        $uploadMulaiTimestamp = $uploadMulai ? Carbon::parse($uploadMulai)->timezone('Asia/Jakarta')->timestamp * 1000 : null;
+        $uploadSelesaiTimestamp = $uploadSelesai ? Carbon::parse($uploadSelesai)->timezone('Asia/Jakarta')->timestamp * 1000 : null;
 
         // Cek apakah pendaftaran masih dibuka
         $isRegistrationOpen = false;
@@ -35,22 +41,37 @@ class LandingPageController extends Controller
             }
         }
 
-        // ✅ Ambil semua tahapan lomba (dari tabel tahapan)
+        // Ambil semua tahapan lomba
         $tahapan = Tahapan::orderBy('urutan', 'asc')->get();
 
-        // ✅ Ambil timeline lomba jika masih diperlukan
+        // Ambil timeline lomba
         $timelines = TimelineLomba::with('lomba')
             ->orderBy('tanggal_mulai', 'asc')
             ->get();
 
-        // Kirim semua data ke view
+        // Kirim data ke view
         return view('lombapik-id', compact(
             'lombas',
             'mainDeadline',
             'deadlineTimestamp',
+            'uploadMulai',
+            'uploadMulaiTimestamp',
+            'uploadSelesaiTimestamp',
             'isRegistrationOpen',
             'timelines',
-            'tahapan' // ✅ penting
+            'tahapan'
         ));
+    }
+
+    // Halaman jika upload belum dibuka
+    public function uploadBelumDibuka()
+    {
+        return view('upload_belum_dibuka'); // buat view baru
+    }
+
+    // Halaman jika upload sudah habis
+    public function uploadHabis()
+    {
+        return view('upload_habis'); // buat view baru
     }
 }

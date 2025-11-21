@@ -23,8 +23,15 @@ class Peserta extends Model
         'id_kelas',
         'no_hp',
         'email',
-        'jenis_peserta',      // kolom baru
-        'anggota_kelompok',   // kolom baru
+        'jenis_peserta',     // baru
+        'anggota_kelompok',  // baru
+        'asal_sekolah',      // baru
+        'asal_pikr',         // baru
+    ];
+
+    // CAST anggota_kelompok ke array
+    protected $casts = [
+        'anggota_kelompok' => 'array',
     ];
 
     /**
@@ -44,16 +51,16 @@ class Peserta extends Model
     }
 
     /**
-     * Relasi (Shortcut): Lomba yang diikuti oleh peserta ini.
+     * Relasi shortcut: Lomba yang diikuti peserta ini.
      */
     public function lomba()
     {
-        // Relasi 'many-to-many' melalui tabel 'pendaftaran_lomba'
+        // Relasi many-to-many melalui tabel 'pendaftaran_lomba'
         return $this->belongsToMany(
             Lomba::class,
-            'pendaftaran_lomba', // Nama tabel perantara
-            'id_peserta',        // Foreign key di tabel perantara untuk Peserta
-            'id_lomba'           // Foreign key di tabel perantara untuk Lomba
+            'pendaftaran_lomba', // tabel pivot
+            'id_peserta',        // foreign key peserta
+            'id_lomba'           // foreign key lomba
         );
     }
 }
