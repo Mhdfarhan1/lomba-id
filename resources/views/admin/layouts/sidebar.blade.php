@@ -38,7 +38,7 @@
             <hr class="border-white/30">
         </div>
 
-        <a href="{{ route('pendaftaran.index') }}" 
+        <a href="{{ route('admin.pendaftaran.index') }}" 
            class="flex items-center px-3 py-2 rounded-lg sidebar-item group text-sm
            {{ request()->routeIs('pendaftaran.*') ? 'bg-blue-900' : '' }}">
             <i class="fas fa-users mr-2 text-base w-5 text-center"></i>

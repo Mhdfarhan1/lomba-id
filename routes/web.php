@@ -89,7 +89,7 @@ Route::prefix('admin')->group(function () {
     Route::post('pendaftaran/{id}/update-status', [PendaftaranLombaController::class, 'updateStatus'])
         ->name('pendaftaran.updateStatus');
 
-    Route::resource('pendaftaran', PendaftaranLombaController::class);
+    Route::resource('pendaftaran', PendaftaranLombaController::class, ['as' => 'admin']);
 
     //Tahapan Lomba (Admin)
     Route::resource('tahapan', TahapanController::class);

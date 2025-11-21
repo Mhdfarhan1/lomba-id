@@ -130,10 +130,6 @@
 
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
-                                    <a href="{{ route('pendaftaran.show', $p->id_pendaftaran) }}"
-                                        class="text-blue-600 hover:text-blue-900 flex items-center">
-                                        <i class="fas fa-eye mr-1"></i> Lihat
-                                    </a>
 
                                     <form action="{{ route('pendaftaran.sendEmail', $p->id_pendaftaran) }}" method="POST"
                                         class="inline form-send-individual">
@@ -150,7 +146,7 @@
                                         </button>
                                     </form>
 
-                                    <form action="{{ route('pendaftaran.destroy', $p->id_pendaftaran) }}" method="POST"
+                                    <form action="{{ route('admin.pendaftaran.destroy', $p->id_pendaftaran) }}" method="POST"
                                         class="inline form-delete">
                                         @csrf
                                         @method('DELETE')
