@@ -502,7 +502,7 @@
             <p class="text-base md:text-lg text-blue-100 max-w-3xl mx-auto mb-12 leading-relaxed">
                 Lomba Pusat Informasi dan Konseling Remaja (LOMBAPIKR.id) merupakan
                 platform perlombaan PIK-R tingkat
-                <span class="font-bold block mt-1">SMA NEGERI 1 TASIK PUTRI PUYU</span>
+                <span class="font-bold block mt-1">REMAJA KABUPATEN KEPULAUAN MERANTI</span>
             </p>
 
             <div class="flex justify-center gap-3 md:gap-6 mb-12 flex-wrap" id="countdown" data-aos="fade-up"
