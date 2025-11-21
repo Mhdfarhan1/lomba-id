@@ -39,7 +39,7 @@
                 <i class="fas fa-plus text-2xl"></i>
                 <span class="font-semibold">Tambah Kelas</span>
             </a>
-            <a href="{{ route('pendaftaran.index') }}"
+            <a href="{{ route('admin.pendaftaran.index') }}"
                 class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-6 rounded-xl shadow hover:shadow-2xl flex items-center justify-center space-x-3 transition transform hover:-translate-y-1">
                 <i class="fas fa-users text-2xl"></i>
                 <span class="font-semibold">Daftar Peserta</span>
